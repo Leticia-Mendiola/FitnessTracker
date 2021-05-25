@@ -19,8 +19,19 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {useN
 
 app.get("/api/workouts", (req, res) => {
   db.Workout.find({})
-    .then(dbNote => {
-      res.json(dbNote);
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+
+app.put("/api/workouts", ({ body }, res) => {
+  db.Workout.updateOne(body)
+    // .then(({ _id }) => db.User.findOneAndUpdate({}, { $push: { notes: _id } }, { new: true }))
+    .then(dbWorkout => {
+      res.json(dbWorkout);
     })
     .catch(err => {
       res.json(err);
@@ -30,6 +41,20 @@ app.get("/api/workouts", (req, res) => {
 app.post("/api/workouts", ({ body }, res) => {
   db.Workout.create(body)
     // .then(({ _id }) => db.User.findOneAndUpdate({}, { $push: { notes: _id } }, { new: true }))
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+
+app.get("/api/workouts/range", (req, res) => {
+  db.Workout.aggregate({
+    $addFields: {
+      totalWeight: { $sum: "$weight" } ,
+      totalDuration: { $sum: "$duration" }
+    }})
     .then(dbWorkout => {
       res.json(dbWorkout);
     })
