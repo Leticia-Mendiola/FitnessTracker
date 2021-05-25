@@ -14,16 +14,20 @@ const ExerciseSchema = new Schema({
         required: "Username is Required"
     },
     duration: {
-        type: Integer
+        type: Number,
+        required: "Enter an amount"
     },
     weight: {
-        type: Integer
+        type: Number,
+        required: "Enter an amount"
     },
     reps: {
-        type: Integer
+        type: Number,
+        required: "Enter an amount"
     },
     sets: {
-        type: Integer
+        type: Number,
+        required: "Enter an amount"
     }
 });
 
