@@ -13,8 +13,16 @@ const ExerciseSchema = new Schema({
         trim: true,
         required: "Username is Required"
     },
-    duration: 20,
-    weight: 300,
-    reps: 10,
-    sets: 4
+    duration: {
+        type: Integer
+    },
+    weight: {
+        type: Integer
+    },
+    reps: {
+        type: Integer
+    },
+    sets: {
+        type: Integer
+    }
 });
