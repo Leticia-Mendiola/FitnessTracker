@@ -1,6 +1,8 @@
 const router = require('express').Router();
-const express = require('express');
-const db = require('../models');
+let mongoose = require("mongoose");
+let db = require("../models");
+
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {useNewUrlParser: true,});
 
 router.get('/workouts', (req,res) => {
     db.Workout.find({})
