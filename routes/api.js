@@ -1,17 +1,36 @@
 const router = require('express').Router();
 const express = require('express');
-const app = express();
 const db = require('../models');
 
-app.get('/workouts', (req,res) => {
+router.get('/workouts', (req,res) => {
     db.Workout.find({})
     .populate("workout")
-    .then(dbWorkouts => {
-        res.json(dbWorkouts);
+    .then(dbWorkout => {
+        res.json(dbWorkout);
       })
       .catch(err => {
-        res.json(err);
+        res.status(400).json(err);
       });
+});
+
+router.put("/workouts", ({ body }, res) => {
+  db.Workout.updateOne(body)
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
+router.post("/workouts", ({ body }, res) => {
+  db.Workout.create(body)
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
 });
 
 module.exports = router;
