@@ -12,50 +12,6 @@ app.use(routes);
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {useNewUrlParser: true,});
 
-app.get("/api/workouts", (req, res) => {
-  db.Workout.find({})
-    .then(dbWorkout => {
-      res.json(dbWorkout);
-    })
-    .catch(err => {
-      res.json(err);
-    });
-});
-
-app.put("/api/workouts", ({ body }, res) => {
-  db.Workout.updateOne(body)
-    .then(dbWorkout => {
-      res.json(dbWorkout);
-    })
-    .catch(err => {
-      res.json(err);
-    });
-});
-
-app.post("/api/workouts", ({ body }, res) => {
-  db.Workout.create(body)
-    .then(dbWorkout => {
-      res.json(dbWorkout);
-    })
-    .catch(err => {
-      res.json(err);
-    });
-});
-
-app.get("/api/workouts/range", (req, res) => {
-  db.Workout.aggregate({
-    $addFields: {
-      totalWeight: { $sum: "$weight" } ,
-      totalDuration: { $sum: "$duration" }
-    }})
-    .then(dbWorkout => {
-      res.json(dbWorkout);
-    })
-    .catch(err => {
-      res.json(err);
-    });
-});
-
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
 });
