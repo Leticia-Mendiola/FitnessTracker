@@ -1,8 +1,9 @@
-const express = require('express');
+const router = require('express').Router();
 const path = require('path');
-const app = express();
 
 // routes to send users to correct html page
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-app.get('/exercise', (req, res) => res.sendFile(path.join(__dirname, 'exercise.html')));
-app.get('/stats', (req, res) => res.sendFile(path.join(__dirname, 'stats.html')));
+router.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+router.get('/exercise', (req, res) => res.sendFile(path.join(__dirname, 'exercise.html')));
+router.get('/stats', (req, res) => res.sendFile(path.join(__dirname, 'stats.html')));
+
+module.exports = router;
