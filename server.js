@@ -1,7 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-// const routes = require('./routes');
+const routes = require('./routes');
 const db = require("./models");
 const PORT = process.env.PORT || 3001;
 
@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use(logger("dev"));
 
-// app.use(routes);
+app.use(routes);
 app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {useNewUrlParser: true,});
@@ -21,6 +21,17 @@ app.get("/api/workouts", (req, res) => {
   db.Workout.find({})
     .then(dbNote => {
       res.json(dbNote);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+
+app.post("/api/workouts", ({ body }, res) => {
+  db.Workout.create(body)
+    // .then(({ _id }) => db.User.findOneAndUpdate({}, { $push: { notes: _id } }, { new: true }))
+    .then(dbWorkout => {
+      res.json(dbWorkout);
     })
     .catch(err => {
       res.json(err);
