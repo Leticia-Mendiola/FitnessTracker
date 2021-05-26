@@ -7,14 +7,13 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useFindAndModify: false});
 
 router.get('/workouts', (req,res) => {
-    db.Workout.find({})
-    .populate("workout")
-    .then(dbWorkout => {
-        res.json(dbWorkout);
-      })
-      .catch(err => {
-        res.status(400).json(err);
-      });
+  db.Workout.find({})
+  .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
 });
 
 router.put("/workouts/:id", ({ body }, res) => {
@@ -38,11 +37,12 @@ router.post("/workouts/:id", ({ body }, res) => {
 });
 
 router.get("/workouts/range", (req, res) => {
-  db.Workout.aggregate({
-    $addFields: {
-      totalWeight: { $sum: "$weight" } ,
-      totalDuration: { $sum: "$duration" }
-    }})
+  db.Workout.find({})
+  // db.Workout.aggregate({
+  //   $addFields: {
+  //     totalWeight: { $sum: "$weight" } ,
+  //     totalDuration: { $sum: "$duration" }
+  //   }})
     .then(dbWorkout => {
       res.json(dbWorkout);
     })
