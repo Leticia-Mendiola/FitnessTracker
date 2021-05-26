@@ -17,7 +17,7 @@ router.get('/workouts', (req,res) => {
       });
 });
 
-router.put("/workouts", ({ body }, res) => {
+router.put("/workouts/:id", ({ body }, res) => {
   db.Workout.updateOne(body)
     .then(dbWorkout => {
       res.json(dbWorkout);
@@ -27,7 +27,7 @@ router.put("/workouts", ({ body }, res) => {
     });
 });
 
-router.post("/workouts", ({ body }, res) => {
+router.post("/workouts/:id", ({ body }, res) => {
   db.Workout.create(body)
     .then(dbWorkout => {
       res.json(dbWorkout);
